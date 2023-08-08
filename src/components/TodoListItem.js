@@ -9,12 +9,15 @@ import './TodoListItem.scss';
 
 const TodoListItem = ({ todo, onRemove, onToggle, style}) => {
     const {id, text , checked} = todo;
+    
     return (
         <div className="TodoListItem-virtualized" style={style}>
         <div className="TodoListItem">
-            <div className={cn('checkbox', {checked})} onClick={()=>onToggle(id)}>
-                {checked ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
-                <div className="text">{text}</div>
+          <div className={cn('checkbox', {checked})} 
+            onClick={()=>onToggle(id)}
+          >
+            {checked ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
+            <div className="text">{text}</div>
             </div>
             <div className="remove" onClick={() => onRemove(id)}>
                 <MdRemoveCircleOutline />
@@ -24,4 +27,7 @@ const TodoListItem = ({ todo, onRemove, onToggle, style}) => {
     );
 };
 
-export default React.memo(TodoListItem);
+export default React.memo(
+    TodoListItem,
+    (prevProps, nextProps) => prevProps.todo === nextProps.todo,
+    );
